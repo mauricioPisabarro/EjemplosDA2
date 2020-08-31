@@ -24,13 +24,17 @@ public:
       if (iter->value == element) {
         return true;
       } else if(iter->value < element) {
-        iter = iter->left;
-      } else {
         iter = iter->right;
+      } else {
+        iter = iter->left;
       }
     }
 
     return false;
+  }
+
+  int size() const {
+    return elements;
   }
 private:
   struct AVLNode {
@@ -48,15 +52,18 @@ private:
   };
 
   void add(AVLNode*& node, const T& value) {
-    assert(!node || (node && node->value != value));
+    // assert(!node || (node && node->value != value));
 
     if (!node) {
       node = new AVLNode(value);
       elements++;
     } else if(value < node->value) {
       add(node->left, value);
-    } else {
+    } else if(value > node->value) {
       add(node->right, value);
+    } else {
+      // dont add repeated numbers
+      return;
     }
 
     balance(node);
@@ -110,19 +117,19 @@ private:
     node->height = max(height(node->left), height(node->right)) + 1;
   }
 
-  int height(const AVLNode*& node) {
+  int height(AVLNode*& node) const {
     return !node ? 0 : node->height;
   }
 
-  bool requiresLeftRotation(const AVLNode*& node) {
+  bool requiresLeftRotation(AVLNode*& node) const {
     return height(node->right) > height(node->left) > 1;
   }
 
-  bool requiresRightRotation(const AVLNode*& node) {
+  bool requiresRightRotation(AVLNode*& node) const {
     return height(node->left) > height(node->right) > 1;
   }
 
-  void rotateLeft(const AVLNode*& node) {
+  void rotateLeft(AVLNode*& node) {
     if (!node) {
       return;
     }
@@ -137,7 +144,7 @@ private:
     node = substitute;
   }
 
-  void rotateRight(const AVLNode*& node) {
+  void rotateRight(AVLNode*& node) {
     if(!node) {
       return;
     }
@@ -152,14 +159,56 @@ private:
     node = substitute;
   }
 
-  int size() {
-    return elements;
-  }
-
   AVLNode* root;
   int elements;
 };
 
+template <class T>
+class Set {
+public:
+  Set() {
+    tree = new AVL<T>();
+  }
+
+  void add(const T& element) {
+    if (exists(element)) {
+      return;
+    }
+
+    tree->add(element);
+  }
+  
+  void remove(const T& element) {
+    tree->remove(element);
+  }
+  
+  bool exists(const T& element) {
+    return tree->exists(element);
+  }
+
+  int size() {
+    return tree->size();
+  }
+
+private:
+  AVL<T>* tree;
+};
+
 int main() {
+  Set<int>* mySet = new Set<int>();
+
+  for (int i = 0; i < 10; i++)
+  {
+    cout << (mySet->exists(i) ? "true" : "false") << " ";
+    cout << mySet->size()  << "\n";
+    for (int j = 0; j < 2; j++)
+    {
+      mySet->add(i);
+    }
+    
+    cout << (mySet->exists(i) ? "true" : "false") << " ";
+    cout << mySet->size() << "\n";
+  }
+
   return 1;
 }
