@@ -4,6 +4,11 @@ using namespace std;
 template <class T>
 class AVL {
 public:
+  AVL() {
+    root = NULL;
+    elements = 0;
+  }
+
   void add(const T& element) {
     add(root, element);
   }
@@ -47,6 +52,7 @@ private:
 
     if (!node) {
       node = new AVLNode(value);
+      elements++;
     } else if(value < node->value) {
       add(node->left, value);
     } else {
@@ -66,11 +72,19 @@ private:
     } else if(element > node->value) {
       remove(node->left, element);
     } else if(node->left && node->right) {
-      
+      AVLNode* smallest = node->right;
+      while(smallest && smallest->left) {
+        smallest = smallest->left;
+      }
+
+      node->value = smallest->value;
+      remove(node->right, node->value);
     } else {
       AVLNode* toDelete = node;
       node = node->left ? node->left : node->right;
       delete toDelete;
+
+      elements--;
     }
   }
 
@@ -136,6 +150,10 @@ private:
 
     // Swap node with substitute
     node = substitute;
+  }
+
+  int size() {
+    return elements;
   }
 
   AVLNode* root;
