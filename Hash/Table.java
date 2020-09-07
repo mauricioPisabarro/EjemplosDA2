@@ -52,13 +52,13 @@ class Table {
         wasErased = true;
       }
     }
-    
-    private Pair<K, V>[] table;
+      
+    private Object[] table;
     private int size;
     private Function<K, Integer> hashFunction;
 
     public HashTable(Function<K, Integer> hashFunction) {
-      table = (Pair<K, V>[]) new Object[16];
+      table = new Object[16];
       this.hashFunction = hashFunction;
     }
 
@@ -143,7 +143,7 @@ class Table {
     private void resize() {
       Object[] oldTable = table;
       size = 0;
-      table = (Pair<K, V>[]) new Object[table.length * 2];
+      table = new Object[table.length * 2];
 
       for (Object pairObject : oldTable) {
         Pair<K, V> pair = (Pair<K, V>) pairObject;
