@@ -1,7 +1,7 @@
-package Hash;
+// package Hash;
 
+import java.util.Scanner;
 import java.util.function.Function;
-
 
 // PUEDE SER QUE NO FUNCIONE
 // PUEDE SER QUE NO FUNCIONE
@@ -11,10 +11,21 @@ import java.util.function.Function;
 // PUEDE SER QUE NO FUNCIONE
 class Table {
   public static void main(String[] args) {
+    HashTable<String, Integer> palabras = new HashTable<>((string) -> string.hashCode());
+    Scanner sc = new Scanner(System.in);
+    int n = sc.nextInt();
+    while(n-- > 0) {
+      palabras.insert(sc.nextLine(), 1);
+    }
 
+    int m = sc.nextInt();
+    while(m-- > 0) {
+      Integer i = palabras.get(sc.nextLine());
+      System.out.println(i == null ? 0 : i);
+    }
   }
 
-  class HashTable<K extends Comparable<K>, V> {
+  static class HashTable<K extends Comparable<K>, V> {
     class Pair<K, V> {
       private K key;
       private V value;
@@ -47,7 +58,7 @@ class Table {
     private Function<K, Integer> hashFunction;
 
     public HashTable(Function<K, Integer> hashFunction) {
-      table = (Pair[]) new Object[16];
+      table = (Pair<K, V>[]) new Object[16];
       this.hashFunction = hashFunction;
     }
 
@@ -64,8 +75,13 @@ class Table {
         pair = (Pair<K, V>) table[whereToInsert];
       }
 
+      if (pair != null && pair.getKey().equals(key) && !pair.wasErased()) {
+        // nada
+      } else {
+        size++;
+      }
+
       table[whereToInsert] = new Pair<K, V>(key, value);
-      size++;
     }
 
     public V get(K key) {
@@ -135,6 +151,7 @@ class Table {
         insert(pair.getKey(), pair.getValue());
       }
     }
-
   }
+
+
 }
