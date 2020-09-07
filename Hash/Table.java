@@ -11,14 +11,15 @@ import java.util.function.Function;
 // PUEDE SER QUE NO FUNCIONE
 class Table {
   public static void main(String[] args) {
-    HashTable<String, Integer> palabras = new HashTable<>((string) -> string.hashCode());
+    HashTable<String, Integer> palabras = new HashTable<>((string) -> Math.abs(string.hashCode()));
     Scanner sc = new Scanner(System.in);
-    int n = sc.nextInt();
+    int n = sc.nextInt();sc.nextLine();
     while(n-- > 0) {
-      palabras.insert(sc.nextLine(), 1);
+      String word = sc.nextLine();
+      palabras.insert(word, 1);
     }
 
-    int m = sc.nextInt();
+    int m = sc.nextInt();sc.nextLine();
     while(m-- > 0) {
       Integer i = palabras.get(sc.nextLine());
       System.out.println(i == null ? 0 : i);
