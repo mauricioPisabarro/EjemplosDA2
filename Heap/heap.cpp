@@ -5,7 +5,7 @@ template<class P, class V>
 class Heap {
 public:
   Heap() {
-    this->heap = new pair<V,P>[16];
+    this->heap = new pair<P, V>[16];
     this->size = 16;
     this->elements = 0;
     this->last = -1;
