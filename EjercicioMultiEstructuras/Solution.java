@@ -19,6 +19,7 @@ class Solution {
             return null;
         }
 
+        // O(log(N))
         public void remove(String name) {
 
         }

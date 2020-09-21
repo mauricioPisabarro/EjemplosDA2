@@ -24,6 +24,7 @@ public:
         return NULL;
     }
 
+    // O(log(N))
     void remove(string name) {
 
     }
