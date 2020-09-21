@@ -1,0 +1,38 @@
+"Conjunto de nodos unidos por aristas, donde cada arista indica la existencia de la relacion entre dos nodos."
+
+Un grafo G es un conjunto de vertices V, y un conjunto de aristas A, donde A = { (v1, v2) e V }
+
+
+lista -> indice representa un Nodo, y donde cada lugar tiene una lista de aristas para ese nodo.
+
+//   Lista de adyacencia
+// Dirigido
+[
+  A -> [B, C, D],
+  B -> [A, D],
+  C -> [B, D],
+  D -> [D],
+]
+
+// No dirigido
+[
+  A -> [B, C, D],
+  B -> [],
+  C -> [],
+  D -> [],
+]
+V = vertices
+A = aristas
+O(V^2) en memoria promedio
+
+
+[ 
+   A B C D
+ A[0 1 1 1],
+ B[1 0 0 0],
+ C[1 0 0 0],
+ D[1 0 0 0],
+]
+V = vertices
+A = aristas
+O(V^2) en memoria SIEMPRE
