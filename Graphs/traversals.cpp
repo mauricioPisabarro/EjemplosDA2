@@ -1,4 +1,6 @@
 #include<iostream>
+#include<stack>
+#include<queue>
 using namespace std;
 
 struct TreeNode {
@@ -69,6 +71,55 @@ void reversePostorder(TreeNode* node) {
   cout << node->val << " ";
 }
 
+void stackLeft(TreeNode* node, stack<TreeNode*>& stack) {
+  while(node) {
+    stack.emplace(node);
+    node = node->left;
+  }
+}
+
+void iterativeInorder(TreeNode* root) {
+  stack<TreeNode*> stack;
+  
+  stackLeft(root, stack);
+  while(!stack.empty()) {
+    TreeNode* toVisit = stack.top();
+    stack.pop();
+
+    cout << toVisit->val << " ";
+    if(toVisit->right) {
+      stackLeft(toVisit->right, stack);
+    }
+  }
+} 
+
+// BFS
+void levelOrderTraversal(TreeNode* root) {
+  queue<TreeNode*> q;
+  q.push(root);
+
+  while(!q.empty()) {
+    int size = q.size();
+    for (int i = 0; i < size; i++)
+    {
+      TreeNode* toVisit = q.front();
+      q.pop();
+
+      cout << toVisit->val << " ";
+      if(toVisit->left) {
+        q.push(toVisit->left);
+      }
+
+      if(toVisit->right) {
+        q.push(toVisit->right);
+      }
+    }
+
+    cout << "\n";
+  }
+}
+
+
 int main() {
   TreeNode* twelve = new TreeNode(12);
   TreeNode* ten = new TreeNode(10, twelve, NULL);
@@ -81,6 +132,7 @@ int main() {
 
 
   TreeNode* root = new TreeNode(1, three, two);
-
+  
+  levelOrderTraversal(root);
   return 1;
 }
