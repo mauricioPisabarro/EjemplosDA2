@@ -1,0 +1,33 @@
+Merge Sort
+
+[ 7, 1, 180 , 4 , -12, 9]
+
+Dividir un problema mas grande en problemas mas chicos que son faciles de resolver
+
+                          [ 7, 1, 180 , 4 , -12, 9]
+                [ 7, 1, 180]                    [4 , -12, 9]
+              [7]      [1, 180]               [4]        [-12, 9]
+                      [1]    [180]                     [-12]    [9]
+
+Conquistar, es decir juntar los subproblemas resueltos para tener una solucion final
+
+Merge: intercala dos listas ordenadas
+
+                         [ 7, 1, 180 , 4 , -12, 9]                            O(N)
+_________________________________________________________________________________Dividir
+                [ 7, 1, 180]                    [4 , -12, 9]                  O(N)
+              [7]      [1, 180]               [4]        [-12, 9]             O(N)
+                      [1]    [180]                     [-12]    [9]           O(N)
+_________________________________________________________________________________Conquistar
+              [7]        [1, 180]              [4]         [-12, 9]           O(N)
+                   [1, 7, 180]                       [-12, 4, 9]              O(N)
+                         [-12, 1, 4, 7, 9, 180]                               O(N)
+
+                         2 ^ h = N cantidad nodos
+                         h = log2(N)
+
+
+O(N * logN)   O(logN) == O(log2N)   ===>   log2N ==> logN 
+                                                 ____
+                                                 log2 
+  
