@@ -1,0 +1,110 @@
+Ejercicio 1 
+
+  A) Un grafo es conexo si esta conectado, es decir que desde un vertice
+  puedo llegar a todos los otros.
+
+  Lo vemos en una sola pieza.
+
+  BFS/DFS nos permiten determinar porque al terminar la busqueda, si visitamos
+  todos los nodos es porque el grafo es una sola pieza. Es conexo
+
+  MergeFindSet/UnionFindSet, ya que al agregar las aristas al este set, vemos 
+  cuantas piezas van quedando del grafo. Si al final queda una sola, entonces
+  es conexo.
+
+  B) Grafo Lista de Adyacencia vs Lista de Adyacencia
+
+  Depende de la densidad del grafo y lo que queramos hacer. Si lo que quermos hacer
+  es encontrar una arista, entonces la matriz nos conviene mas para grafos mas densos
+  porque la busqueda es O(1) dados los dos vertices, en cambio en la lista de Adyacencia
+  es O(V).
+
+  La lista de adyacencia es mas eficiente en memoria porque solo guarda las adyacencias.
+
+  (i, j) => busco en la lista de adyacencia de i, en O(V)
+
+  Para acelerar esto puedo usar un set en lugar de una lista para encontrar en O(1)
+  una arista.
+
+  Si queremos hacer BFS (o Dijkstra por ejemplo), la lista de adyacencia es mejor porque
+  visitamos a los vecinos (adyacentes) de un nodo eficientemente.
+
+
+  i 1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+    1 0 1 0 1 0 1
+
+  C)  1 - Encontramos el grado de entrada de los vertices
+      2 - Encolamos grado de entrada 0
+      3 - While hayVerticesConGrado 0
+             4 - Agregamos estos al orden
+             5 - Visitamos vecinos
+             6 - Borramos aristas a vecinos
+             7 - Encolamos grado de entrada 0
+
+      return orden
+
+      A -> B -> C
+            \
+             > D
+     
+      [C D B A]
+
+  D) MST es el subgrafo conexo con menor costo.
+           - Prim 
+              * Parecido a Dijkstra
+              * Seleccionar la arista de menor costo
+              * Si el vertice destino de la arista pertenece al arbol que 
+              estoy armando, entonces lo ignoro
+                  * Si no, lo agrego al arbol.
+
+
+            dikstra(origen, destino, grafo):
+              q = heap() 
+              q.add((origen, 0))
+
+              seen = set()
+              camino = []
+              while q:
+                nodo, costo = heap.pop()
+
+                if nodo in seen:
+                  continue
+                else nodo == destino:
+                  llegamos
+
+                seen.add(nodo)
+                camino.add(nodo)
+                encolarVecinosConCosto(heap, nodo, grafo)
+
+            prim(grafo):
+              q = heap()
+              origen = grafo.aristaRandom()
+              q.add(origen, 0)
+              
+              arbol = set()
+              arbol.add(origen.primerVertice)
+              while arbol.size() != grafo.cantidadDeVertices():
+                arista, _ = q.pop()
+
+                if arista.segundoVertice in arbol:
+                  continue
+
+                arbol.add(arista.segundoVertice)
+                encolamosAristasDeVecinos(heap, grafo, arista.segundoVertice)        
+
+              return arbol
+
+           - Kruskal
+              * Ordenamos las aristas segun su costo
+              * Comenzamos un un arbol vacio (un set)
+              * Agregamos aristas solo si no formal un ciclo
+                en el arbol que tenemos
+              * Terminamos cuando el arbol tiene todos los vertices
+              
+      
+        
