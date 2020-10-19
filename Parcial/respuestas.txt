@@ -107,4 +107,57 @@ Ejercicio 1
               * Terminamos cuando el arbol tiene todos los vertices
               
       
-        
+Ejercicio 2
+
+  a) Consiste en obtener un codigo numerico para un tipo de dato, que permite busquedas
+  en O(1). (Explicacion mas o menos) 
+  
+  Es una funcion matematica que nos retorna un numero entero dado un objeto cualquiera,
+  la idea es que esta funcion sea determinista (mismo resultado para una misma entrada siempre),
+  uniforme. (Explicacion mas formal)
+
+      Esto es no uniforme
+       hola ->  1
+       chau  ->  1
+       otraPalabra -> 1
+
+      Esto es uniforme, y evita colisiones
+       hola ->  1
+       chau  ->  -3
+       otraPalabra -> 6
+  
+  h -> f(x) -> y / x es objeto, y es un Z
+
+  b) Primero tenemos que decir que tipo de estructura hash es, asi sabemos como resolver colisiones.
+
+  int index = h(elementoAInsertar) % tamanioArraySubyacente;
+
+    Si el hash es abierto
+
+  inserto(elementoAInsertar, estructuraHash[index])
+
+    Si el hash es cerrado
+
+    while hayConflicto
+      index = resolverConflicto(index, estructuraHash)
+
+    estructuraHash[index] = elementoAInsertar
+
+  Da la casualidad que para un entero la funcion hash simplemente retorna el entero
+
+  
+  c) Es una estructura de datos que representa un arbol binario, en donde para cada nodo tiene hijos 
+  que son menores (o mayores ) a si mismo dependiendo de si es min o max heap.
+
+  Puede ser usado para representar una cola de prioridad. 
+  Se puede usar para ordenar listas.
+  
+  d) 
+  
+  borrarMin() {
+    int min = heap[0];
+
+    swap(heap, 0, indiceUltimoElemento);
+
+    hundir(heap, 0);
+  }
