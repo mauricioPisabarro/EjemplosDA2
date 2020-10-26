@@ -1,3 +1,4 @@
+#include<unordered_map>
 #include <iostream>
 using namespace std;
 
@@ -15,16 +16,20 @@ public:
     delete[] this->heap;
   }
 
+  // O(logN)
   void push(P& priority, V& value) {
     heap[++last] = make_pair<P,V>(std::forward<P>(priority), std::forward<V>(value));
+    valueByIndex[value] = last;
 
     floatValue(last - 1);
     elements++;
   }
 
+  // O(logN)
   V pop() {
     V value = heap[0].second;
 
+    valueByIndex.erase(value);
     heap[0] = heap[last--];
     sinkValue(0);
 
@@ -42,6 +47,27 @@ public:
       cout << heap[i].second << " ";
     }
   }
+
+  void changePriority(P& priority, V& value) {
+    if(valueByIndex.find(value) == valueByIndex.end()) {
+      return;
+    }
+
+    // O(1)
+    int index = valueByIndex[value];
+    pair<P,V> pair = heap[index];    
+    
+    // O(log N)
+    if(pair.first <= priority) {
+      pair.first = priority;
+
+      sinkValue(index);
+    } else {
+      pair.first = priority;
+
+      floatValue(index);
+    }
+  }
 private:
   void floatValue(int i) {
     if (i <= 0) {
@@ -53,6 +79,9 @@ private:
     if (pair.first > directParent.first) {
       heap[i] = directParent;
       heap[parent(i)] = pair;
+
+      valueByIndex[heap[i].second] = i;
+      valueByIndex[heap[parent(i)].second] = parent(i);
       floatValue(parent(i));
     }
   }
@@ -76,6 +105,9 @@ private:
 
     if(i != biggest) {
       swap(heap[biggest], heap[i]);
+      valueByIndex[heap[i].second] = i;
+      valueByIndex[heap[biggest].second] = biggest;
+      
       sinkValue(biggest);
     }
   }
@@ -100,6 +132,7 @@ private:
   int size;
   int elements;
   pair<P,V>* heap;
+  unordered_map<V, int> valueByIndex;
 };
 
 int main() {
