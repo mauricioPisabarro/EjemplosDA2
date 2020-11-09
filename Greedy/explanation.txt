@@ -1,0 +1,35 @@
+Tecnica de disenio de algoritmos que busca la mejor soliucion global, encontrando optimos locales.
+
+def dijkstra(graph, origen, destination):
+  heap = new Heap()
+
+  heap.add((origen, 0))
+  visited = set()
+  while !heap.isEmpty():
+     # encontrando un optimo local al sacar el mas barato
+     toVisit, costOfGettingThere = heap.pop()
+     
+     if toVisit in visited:
+        continue
+
+     if toVisit == destination:
+        # para llegar al optimo global del camino mas corto
+        TERMINAMOS
+
+     for (adjacent, cost) in graph.getAdjacents(toVisit):
+        heap.add((adjacent, cost + costOfGettingThere))
+
+    visited.add(toVisit)
+
+
+
+
+[1, 4, -2, -5, 8, 1, 3, 3, 3]
+[a1, a2, a3, a4, ..., an]   a1 <= a2 >= a3 <= a4 >= ...
+
+a2 >= a3
+a4 > a3
+
+a2 <= a4 || a2 > a4
+a1 <= a4 < a2 >= a3
+[1, 4, -5, -2, 8, 1, 3, 3, 3]
