@@ -30,4 +30,19 @@ ________________________________________________________________________________
 O(N * logN)   O(logN) == O(log2N)   ===>   log2N ==> logN 
                                                  ____
                                                  log2 
+
+
+
+siluetas 
+
+[(I, F, H), (I, F, H), (I, F, H), (I, F, H)]
   
+def siluetas(tiras, izquierda, derecha):
+    if izquierda > derecha:
+      return []
+
+    medio = (izquierda + derecha)/2
+    solucionIquierda = siluetas(tiras, izquierda, medio)
+    solucionDerecha = siluetas(tiras, medio + 1, derecha)
+
+    return merge(solucionIquierda, solucionDerecha)
